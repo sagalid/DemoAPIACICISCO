@@ -24,6 +24,25 @@ def obtener_token(usuario, clave):
     return token
 
 
-token = obtener_token(conf.usuario, conf.clave)
+# GET http://apic-ip-address/api/class/topSystem.json
 
-print(token)
+def top_system():
+    cabecera = {
+        "Content-Type": "application/json"
+    }
+    galleta = {
+        "APIC-Cookie": obtener_token(conf.usuario, conf.clave)
+    }
+
+    requests.packages.urllib3.disable_warnings()
+    respuesta = requests.get(sandbox+"/api/class/topSystem.json", headers=cabecera, cookies=galleta, verify=False)
+
+    total_nodos = int(respuesta.json()["totalCount"])
+
+    for i in range(0, total_nodos):
+        ip_local = respuesta.json()["imdata"][i]["topSystem"]["attributes"]["address"]
+        print(ip_local)
+
+top_system()
+
+
