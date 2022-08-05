@@ -35,7 +35,13 @@ def top_system():
     }
 
     requests.packages.urllib3.disable_warnings()
-    respuesta = requests.get(sandbox+"/api/class/topSystem.json", headers=cabecera, cookies=galleta, verify=False)
+
+    try:
+        respuesta = requests.get(sandbox+"/api/class/topSystem.json", headers=cabecera, cookies=galleta, verify=False)
+    except Exception as err:
+        print("Error al consumir el API por problemas de conexion")
+        exit(1)
+
     total_nodos = int(respuesta.json()["totalCount"])
 
     for i in range(0, total_nodos):
