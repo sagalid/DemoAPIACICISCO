@@ -38,6 +38,11 @@ def top_system():
 
     try:
         respuesta = requests.get(sandbox+"/api/class/topSystem.json", headers=cabecera, cookies=galleta, verify=False)
+        print(respuesta.request.method)
+        print(respuesta.request.path_url)
+        print(respuesta.request.body)
+        print(respuesta.request.headers['Cookie'])
+        print(respuesta.headers)
     except Exception as err:
         print("Error al consumir el API por problemas de conexion")
         exit(1)
