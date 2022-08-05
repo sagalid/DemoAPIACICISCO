@@ -36,12 +36,14 @@ def top_system():
 
     requests.packages.urllib3.disable_warnings()
     respuesta = requests.get(sandbox+"/api/class/topSystem.json", headers=cabecera, cookies=galleta, verify=False)
-
     total_nodos = int(respuesta.json()["totalCount"])
 
     for i in range(0, total_nodos):
         ip_local = respuesta.json()["imdata"][i]["topSystem"]["attributes"]["address"]
-        print(ip_local)
+        mac_local = respuesta.json()["imdata"][i]["topSystem"]["attributes"]["fabricMAC"]
+        state_local = respuesta.json()["imdata"][i]["topSystem"]["attributes"]["state"]
+
+        print(ip_local + "|" + mac_local + "|" + state_local)
 
 top_system()
 
